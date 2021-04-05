@@ -1,0 +1,489 @@
+@mixin mQ($arg) {
+    @media screen and (min-width: $arg) {
+        @content;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.guess-the-chord {
+    $fontColour: #eee;
+    $fontColourHover: #fff;
+    $neutral: #637f9b;
+    $neutralLight: #86a7ca;
+    $neutralLightHover: #def;
+    $blue: #33639b;
+    $blueLight: #8eaedf;
+    $blueLightHover: #c4d1f5;
+    $green: #070;
+    $greenLight: #090;
+    $red: #700;
+    $redLight: #900;
+    $orange: #ff7b00;
+    $orangeLight: #ffa600;
+    $purple: #63356e;
+    $purpleLight: #83548f;
+    $purpleLightHover: #a67bb1;
+    $blueDark: #0000ef;
+    $disabled: #aaa;
+    $disabledLight: #eee;
+
+    max-width: 600px;
+    margin: 0 auto;
+    background: #121212;
+    color: #f5f5f5;
+    font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+        'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    color: #f5f5f5;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    button,
+    label {
+        font-family: inherit;
+        letter-spacing: 0.5px;
+        text-transform: none;
+    }
+
+    .wrapper {
+        padding: 0 10px;
+        @include mQ(500px) {
+            padding: 0 16px;
+        }
+    }
+    .midi {
+        display: none;
+    }
+    button {
+        border: none;
+        outline: transparent;
+        background: transparent;
+    }
+    .btn {
+        display: inline-block;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 0.75rem;
+        font-family: inherit;
+        color: $fontColour;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        &:hover {
+            color: $fontColourHover;
+        }
+        &:disabled {
+            pointer-events: none;
+            background: $disabled !important;
+            border-color: $disabledLight !important;
+        }
+        @include mQ(500px) {
+            border-width: 3px;
+        }
+    }
+    .settings {
+        padding: 2rem 0 0;
+        height: 100%;
+        .menu-container {
+            min-height: 4rem;
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .score {
+            font-size: 1.5rem;
+            color: #fff;
+            &.negative {
+                color: $red;
+            }
+        }
+        .volume-icon {
+            width: 44px;
+            height: 44px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            &:hover {
+                filter: brightness(1.2);
+            }
+        }
+        .stats-icon {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 6px;
+            right: 4rem;
+            z-index: 100;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            &:hover {
+                filter: brightness(1.2);
+            }
+            img {
+                width: 100%;
+            }
+        }
+        .menu-icon {
+            width: 44px;
+            height: 44px;
+            position: absolute;
+            right: 0;
+            z-index: 300;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            .icon-inner {
+                position: relative;
+            }
+            span {
+                width: 90%;
+                height: 4px;
+                border-radius: 40px;
+                background: #ddd;
+                position: absolute;
+                left: 0;
+                transform-origin: 50% 50%;
+                transition: opacity 0.25s, top 0.5s;
+            }
+            span:nth-child(1) {
+                top: 10px;
+            }
+            span:nth-child(2) {
+                top: 25px;
+            }
+            span:nth-child(3) {
+                top: 40px;
+            }
+            &:hover span {
+                background: #fff;
+            }
+            &.open {
+                span:nth-child(1) {
+                    top: 25px;
+                    animation: menu-1 1s forwards;
+                }
+                span:nth-child(2) {
+                    opacity: 0;
+                }
+                span:nth-child(3) {
+                    top: 25px;
+                    animation: menu-2 1s forwards;
+                }
+            }
+        }
+        @keyframes menu-1 {
+            50% {
+                transform: rotate(0);
+            }
+            100% {
+                transform: rotate(45deg);
+            }
+        }
+        @keyframes menu-2 {
+            50% {
+                transform: rotate(0);
+            }
+            100% {
+                transform: rotate(-45deg);
+            }
+        }
+        .volume-grid {
+            position: absolute;
+            top: 42px;
+            left: 0;
+            display: grid;
+            grid-template-columns: repeat(6, 24px);
+            grid-template-rows: 20px;
+            overflow: hidden;
+            label {
+                cursor: pointer;
+            }
+            span {
+                width: 100%;
+                height: 100%;
+                display: inline-block;
+            }
+            input:checked + span {
+                background: $blueDark;
+            }
+        }
+        .menu,
+        .stats {
+            width: 100%;
+            height: 100%;
+            padding: 0 0.5rem 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 2px 3px 4px 0 rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            height: 0;
+            transition: height 0.5s;
+            &.open {
+                height: 30rem;
+            }
+        }
+        .stats {
+            .stats-grid {
+                display: grid;
+                grid-template-columns: 180px 1fr;
+                hr {
+                    margin: 10px 0;
+                    grid-column: 1 / span 2;
+                }
+                h5 {
+                    font-size: 1rem;
+                    line-height: 1.6;
+                }
+                span.bold {
+                    font-weight: 600;
+                }
+                p.bold {
+                    font-weight: 600;
+                    margin-bottom: 0.5rem;
+                }
+                p.span-2 {
+                    grid-column: 1 / span 2;
+                }
+                p.indent {
+                    margin-left: 1rem;
+                }
+                span.width-60px {
+                    display: inline-block;
+                    width: 60px;
+                }
+            }
+        }
+        .menu-suffix {
+            padding: 0 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(4, 60px);
+            grid-gap: 4px;
+            @include mQ(500px) {
+                grid-template-columns: repeat(4, 80px);
+            }
+        }
+        .menu-root {
+            display: grid;
+            grid-template-columns: repeat(4, 60px);
+            grid-gap: 4px;
+            @include mQ(500px) {
+                grid-template-columns: repeat(4, 80px);
+            }
+            label:last-child {
+                margin-top: 1rem;
+            }
+        }
+        h3 {
+            padding: 1rem 0;
+        }
+        h4 {
+            padding: 1rem 0;
+        }
+        label {
+            width: 100%;
+            text-align: center;
+            span.btn {
+                width: 100%;
+                padding: 0.125rem 0;
+                border-color: $neutralLight;
+                background: $neutral;
+                font-size: 0.875rem;
+                color: $fontColour;
+                &:hover {
+                    border-color: $neutralLightHover;
+                    color: $fontColourHover;
+                }
+                @include mQ(500px) {
+                    padding: 0.25rem 0;
+                    font-size: 0.875rem;
+                }
+            }
+        }
+        input {
+            width: 0;
+            height: 0;
+            position: absolute;
+            visibility: hidden;
+            opacity: 0;
+            &:checked + span {
+                border-color: $blueLight;
+                background: $blue;
+                &:hover {
+                    border-color: $blueLightHover;
+                }
+            }
+        }
+    }
+
+    .player-area {
+        padding: 0 0 2rem;
+        .player-grid {
+            display: grid;
+        }
+        .play-buttons {
+            width: 270px;
+            padding: 2rem 0 0;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1rem;
+            .btn {
+                padding: 0.5rem 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 2rem;
+                border-color: $purpleLight;
+                background: $purple;
+                .emoji {
+                    margin-right: 1rem;
+                }
+                .play-svg {
+                    width: 2rem;
+                    img {
+                        display: block;
+                        width: 100%;
+                    }
+                }
+                &:hover {
+                    border-color: $purpleLightHover;
+                }
+            }
+            .play-delay {
+                width: 100%;
+                grid-column: 1 / span 2;
+                display: grid;
+                grid-template-columns: repeat(4, auto);
+                grid-template-rows: 3rem;
+                border-style: solid;
+                border-width: 2px;
+                border-color: $purpleLight;
+                background: $purple;
+                border-radius: 0.75rem;
+                font-family: inherit;
+                color: $fontColour;
+                position: relative;
+                overflow: hidden;
+                @include mQ(500px) {
+                    border-width: 3px;
+                }
+                &.disabled {
+                    pointer-events: none;
+                    background: $disabled;
+                    border-color: $disabledLight;
+                }
+                > span {
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    z-index: 20;
+                    display: inline-block;
+                    text-align: center;
+                    pointer-events: none;
+                }
+                label {
+                    width: 100%;
+                    height: 100%;
+                    display: inline-block;
+                    position: relative;
+                    z-index: 10;
+                    cursor: pointer;
+                    -webkit-tap-highlight-color: transparent;
+                    span {
+                        width: 100%;
+                        height: 100%;
+                        display: inline-block;
+                        font-size: 0.875rem;
+                        text-align: center;
+                        line-height: 4.5rem;
+                    }
+                    input {
+                        width: 0;
+                        height: 0;
+                        position: absolute;
+                        opacity: 0;
+                        visibility: hidden;
+                        &:checked + span {
+                            background: rgba(0, 0, 0, 0.5);
+                        }
+                    }
+                    &:hover {
+                        color: $fontColourHover;
+                    }
+                }
+            }
+        }
+
+        .player-choices {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 4px;
+            @include mQ(500px) {
+                grid-gap: 8px;
+            }
+            .btn {
+                padding: 0.5rem 1rem;
+                border-color: $neutralLight;
+                background: $neutral;
+                font-size: 0.875rem;
+                position: relative;
+                &.right {
+                    border-color: $greenLight !important;
+                    background: $green !important;
+                    //pointer-events: none;
+                }
+                &.wrong {
+                    border-color: $redLight !important;
+                    background: $red !important;
+                    //pointer-events: none;
+                }
+                &:hover {
+                    border-color: $neutralLightHover;
+                    color: $fontColourHover;
+                }
+                img {
+                    position: absolute;
+                    top: 11px;
+                    right: 3px;
+                    width: 10px;
+                    @include mQ(500px) {
+                        width: 12px;
+                        top: 10px;
+                        right: 8px;
+                    }
+                }
+            }
+        }
+
+        .player-new {
+            padding: 2rem 0;
+            text-align: center;
+            .btn {
+                padding: 0.5rem 1rem;
+                background: $orange;
+                border-color: $orangeLight;
+                font-size: 1.25rem;
+                font-weight: 600;
+                &:disabled {
+                    background: $disabled;
+                    border-color: $disabledLight;
+                    color: $disabledLight;
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+}
