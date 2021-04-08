@@ -93,6 +93,9 @@ function GuessTheChord() {
     const playChord = e => {
         if (e.target.closest('.btn').name === 'piano' || e.target.closest('.btn').name === 'guitar') {
             setInstrument(e.target.closest('.btn').name);
+            if (gameStatus === 'isFound') {
+                setSuffix(currStats.suffix);
+            }
         } else {
             setSuffix(e.target.closest('.btn').name);
         }
@@ -111,7 +114,7 @@ function GuessTheChord() {
         setCurrStats({ mistakes: 0, totalPossibilities: actives.length, suffix: randomSuffix });
         setGameStatus('isNewRound');
     };
-    console.log(gameStatus);
+
     return (
         <div className="guess-the-chord">
             <Settings
