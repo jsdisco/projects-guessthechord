@@ -92,7 +92,6 @@
     }
     .settings {
         padding: 2rem 0 0;
-        height: 100%;
         .menu-container {
             min-height: 4rem;
             position: relative;
@@ -232,7 +231,10 @@
             height: 0;
             transition: height 0.5s;
             &.open {
-                height: 30rem;
+                height: 28rem;
+                @include mQ(500px) {
+                    height: 28rem;
+                }
             }
         }
         .stats {
@@ -272,7 +274,8 @@
             grid-template-columns: repeat(4, 60px);
             grid-gap: 4px;
             @include mQ(500px) {
-                grid-template-columns: repeat(4, 80px);
+                grid-gap: 5px;
+                grid-template-columns: repeat(4, 83px);
             }
         }
         .menu-root {
@@ -280,7 +283,8 @@
             grid-template-columns: repeat(4, 60px);
             grid-gap: 4px;
             @include mQ(500px) {
-                grid-template-columns: repeat(4, 80px);
+                grid-gap: 5px;
+                grid-template-columns: repeat(4, 83px);
             }
             label:last-child {
                 margin-top: 1rem;
@@ -300,7 +304,7 @@
                 padding: 0.125rem 0;
                 border-color: $neutralLight;
                 background: $neutral;
-                font-size: 0.875rem;
+                font-size: 0.75rem;
                 color: $fontColour;
                 &:hover {
                     border-color: $neutralLightHover;

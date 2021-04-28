@@ -78,7 +78,6 @@
 
 .guess-the-chord .settings {
   padding: 2rem 0 0;
-  height: 100%;
 }
 
 .guess-the-chord .settings .menu-container {
@@ -286,7 +285,14 @@
 
 .guess-the-chord .settings .menu.open,
 .guess-the-chord .settings .stats.open {
-  height: 30rem;
+  height: 28rem;
+}
+
+@media screen and (min-width: 500px) {
+  .guess-the-chord .settings .menu.open,
+  .guess-the-chord .settings .stats.open {
+    height: 28rem;
+  }
 }
 
 .guess-the-chord .settings .stats .stats-grid {
@@ -343,8 +349,9 @@
 
 @media screen and (min-width: 500px) {
   .guess-the-chord .settings .menu-suffix {
-    -ms-grid-columns: (80px)[4];
-        grid-template-columns: repeat(4, 80px);
+    grid-gap: 5px;
+    -ms-grid-columns: (83px)[4];
+        grid-template-columns: repeat(4, 83px);
   }
 }
 
@@ -358,8 +365,9 @@
 
 @media screen and (min-width: 500px) {
   .guess-the-chord .settings .menu-root {
-    -ms-grid-columns: (80px)[4];
-        grid-template-columns: repeat(4, 80px);
+    grid-gap: 5px;
+    -ms-grid-columns: (83px)[4];
+        grid-template-columns: repeat(4, 83px);
   }
 }
 
@@ -385,7 +393,7 @@
   padding: 0.125rem 0;
   border-color: #86a7ca;
   background: #637f9b;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: #eee;
 }
 

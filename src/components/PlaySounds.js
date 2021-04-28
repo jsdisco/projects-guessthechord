@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import MIDISounds from 'midi-sounds-react';
-import { noteToMidiKey } from '../utils/helpers.js';
-import { chordNotes } from '../utils/chordData.js';
+import chordData from '../utils/chordData.json';
 
 function PlaySounds({ volume, play, updatePlay, root, suffix, instrument, delay }) {
     const midiSounds = useRef(null);
@@ -14,24 +13,25 @@ function PlaySounds({ volume, play, updatePlay, root, suffix, instrument, delay 
         const playNote = (mk, ik) => midiSounds.current.playChordNow(ik, [mk], 2);
 
         timeoutIds.forEach(id => clearTimeout(id));
+        const ids = [];
 
         const instrKey = instrument === 'piano' ? pianoSoundIndex : guitarSoundIndex;
-        const notesArr = chordNotes[root][suffix];
-        const ids = [];
-        notesArr.forEach((noteOctave, i) => {
-            const [note, octave] = noteOctave.split('-');
-            const midiKey = noteToMidiKey(note, +octave);
-            if (delay === '0') {
-                playNote(midiKey, instrKey);
-            } else {
-                const id = setTimeout(() => {
+        const midiArr = chordData[root][suffix];
+
+        if (midiArr) {
+            midiArr.forEach((midiKey, i) => {
+                if (delay === '0') {
                     playNote(midiKey, instrKey);
-                }, +delay * i * 100);
-                ids.push(id);
+                } else {
+                    const id = setTimeout(() => {
+                        playNote(midiKey, instrKey);
+                    }, +delay * i * 100);
+                    ids.push(id);
+                }
+            });
+            if (delay !== '0') {
+                setTimeoutIds(ids);
             }
-        });
-        if (delay !== '0') {
-            setTimeoutIds(ids);
         }
 
         updatePlay(false);

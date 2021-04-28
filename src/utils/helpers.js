@@ -1,7 +1,5 @@
 const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-const noteToMidiKey = (note, octave) => octave * 12 + notes.indexOf(note);
-
 const getRandomRoot = () => notes[Math.floor(Math.random() * 12)];
 
 const getRandomSuffix = arr => arr[Math.floor(Math.random() * arr.length)];
@@ -33,4 +31,4 @@ const analyseStats = arr => {
     return { flawless, avgTries, bestIdentified, worstIdentified };
 };
 
-export { noteToMidiKey, getRandomRoot, getRandomSuffix, analyseStats };
+export { getRandomRoot, getRandomSuffix, analyseStats };

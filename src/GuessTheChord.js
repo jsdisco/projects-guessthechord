@@ -3,6 +3,7 @@ import Settings from './components/Settings.js';
 import PlayerArea from './components/PlayerArea.js';
 import PlaySounds from './components/PlaySounds.js';
 import { getRandomRoot, getRandomSuffix } from './utils/helpers.js';
+import { allRootLabels, allSuffixes } from './utils/constants.js';
 import './css/guessthechord.css';
 
 function GuessTheChord() {
@@ -21,17 +22,17 @@ function GuessTheChord() {
     const [delay, setDelay] = useState(0);
     const [currDelays, setCurrDelays] = useState(null);
 
-    const allRootLabels = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B', 'random'];
-
     useEffect(() => {
         const startGame = () => {
             const allVolumes = [0, 20, 40, 60, 80, 100];
             setCurrVolumes(() => allVolumes.map(vol => (vol <= 40 ? [vol, true] : [vol, false])));
             const allDelays = ['0', 'min', 'medium', 'max'];
             setCurrDelays(() => allDelays.map((delay, i) => (i === 0 ? [delay, true] : [delay, false])));
-            const allSuffixes = ['major', 'minor', '7', 'm7', 'maj7', 'sus4', 'dim', 'dim7', 'aug'];
-            setCurrSuffixes(() => allSuffixes.map(suffix => [suffix, true]));
-            setAttempts(() => allSuffixes.map(suffix => [suffix, 0]));
+            const activeSuffixes = ['major', 'minor', '7', 'maj7', 'dim', 'dim7', 'm7', 'sus4', 'aug'];
+            setCurrSuffixes(() =>
+                allSuffixes.map(suffix => (activeSuffixes.includes(suffix) ? [suffix, true] : [suffix, false]))
+            );
+            setAttempts(() => activeSuffixes.map(suffix => [suffix, 0]));
         };
         startGame();
     }, []);
@@ -127,7 +128,7 @@ function GuessTheChord() {
                 currVolumes={currVolumes}
                 updateVolume={updateVolume}
             />
-            <div></div>
+
             <PlayerArea
                 playChord={playChord}
                 handleNew={handleNew}
