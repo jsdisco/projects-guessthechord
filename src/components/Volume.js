@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Volume({ volume, currVolumes, updateVolume }) {
+function Volume({ volume, volumes, updateVolume }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpen = () => setIsOpen(prev => !prev);
@@ -9,7 +9,7 @@ function Volume({ volume, currVolumes, updateVolume }) {
         <div className="volume">
             {isOpen && (
                 <div className="volume-grid btn">
-                    {currVolumes.map(([vol, isChecked]) => (
+                    {volumes.map(([vol, isChecked]) => (
                         <label key={vol}>
                             <input
                                 type="checkbox"

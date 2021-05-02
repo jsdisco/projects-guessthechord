@@ -1,8 +1,4 @@
-const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-
-const getRandomRoot = () => notes[Math.floor(Math.random() * 12)];
-
-const getRandomSuffix = arr => arr[Math.floor(Math.random() * arr.length)];
+const getRandomValue = arr => arr[Math.floor(Math.random() * arr.length)];
 
 const analyseStats = arr => {
     const flawless = arr.filter(round => round.mistakes === 0).length;
@@ -31,4 +27,4 @@ const analyseStats = arr => {
     return { flawless, avgTries, bestIdentified, worstIdentified };
 };
 
-export { getRandomRoot, getRandomSuffix, analyseStats };
+export { getRandomValue, analyseStats };

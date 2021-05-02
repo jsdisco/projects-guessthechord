@@ -1,7 +1,7 @@
 import React from 'react';
 import playIcon from '../assets/play.svg';
 
-function PlayerArea({ playChord, handleNew, gameStatus, attempts, currDelays, updateAttempts, updateDelays }) {
+function PlayerArea({ playChord, handleNew, gameStatus, attempts, delays, updateAttempts, updateDelays }) {
     return (
         <div className="player-area">
             <div className="wrapper">
@@ -9,8 +9,8 @@ function PlayerArea({ playChord, handleNew, gameStatus, attempts, currDelays, up
                     <div className="play-buttons">
                         <div className={gameStatus === 'initial' ? 'play-delay disabled' : 'play-delay'}>
                             <span>delay</span>
-                            {currDelays &&
-                                currDelays.map(([label, isChecked], i) => (
+                            {delays &&
+                                delays.map(([label, isChecked], i) => (
                                     <label key={label}>
                                         <input
                                             type="checkbox"

@@ -3,16 +3,7 @@ import Volume from './Volume.js';
 import { analyseStats } from '../utils/helpers.js';
 import statIcon from '../assets/statistics.svg';
 
-function Settings({
-    currSuffixes,
-    allRootLabels,
-    currRootLabel,
-    updateSettings,
-    statistics,
-    volume,
-    currVolumes,
-    updateVolume
-}) {
+function Settings({ currSuffixes, currRootLabels, updateSettings, statistics, volume, volumes, updateVolume }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isStatsOpen, setIsStatsOpen] = useState(false);
 
@@ -25,7 +16,7 @@ function Settings({
         <div className="settings">
             <div className="wrapper">
                 <div className="menu-container">
-                    <Volume volume={volume} currVolumes={currVolumes} updateVolume={updateVolume} />
+                    <Volume volume={volume} volumes={volumes} updateVolume={updateVolume} />
                     {!isMenuOpen && (
                         <div className={isStatsOpen ? 'stats-icon open' : 'stats-icon'} onClick={handleStats}>
                             <img src={statIcon} alt="open statistics" />
@@ -82,6 +73,7 @@ function Settings({
                                     <label key={suffix}>
                                         <input
                                             type="checkbox"
+                                            className="input-suffix"
                                             name={suffix}
                                             value={isChecked}
                                             checked={isChecked}
@@ -93,18 +85,20 @@ function Settings({
                         </div>
                         <h4>Chord root note:</h4>
                         <div className="menu-root">
-                            {allRootLabels.map(r => (
-                                <label key={r}>
-                                    <input
-                                        type="radio"
-                                        name="root"
-                                        value={r}
-                                        checked={r === currRootLabel}
-                                        onChange={updateSettings}
-                                    />
-                                    <span className="btn">{r}</span>
-                                </label>
-                            ))}
+                            {currRootLabels &&
+                                currRootLabels.map(([root, isChecked]) => (
+                                    <label key={root}>
+                                        <input
+                                            type="checkbox"
+                                            className="input-root"
+                                            name={root}
+                                            value={isChecked}
+                                            checked={isChecked}
+                                            onChange={updateSettings}
+                                        />
+                                        <span className="btn">{root}</span>
+                                    </label>
+                                ))}
                         </div>
                     </div>
                 </div>
