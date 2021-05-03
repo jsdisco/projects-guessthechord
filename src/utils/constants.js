@@ -1,6 +1,6 @@
 const allRootLabels = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B'];
 
-const allSuffixes = ['major', 'minor', '7', 'm7', 'maj7', 'dim', 'dim7', 'sus4', 'aug'];
+const allSuffixes = ['major', 'minor', '7', '9', 'm7', 'maj7', 'dim', 'dim7', 'sus4', 'sus2', '7sus4', 'aug'];
 
 export { allRootLabels, allSuffixes };
 

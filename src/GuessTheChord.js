@@ -30,7 +30,20 @@ function GuessTheChord() {
             setVolumes(() => allVolumes.map(vol => (vol <= 40 ? [vol, true] : [vol, false])));
             const allDelays = ['0', 'min', 'medium', 'max'];
             setDelays(() => allDelays.map((delay, i) => (i === 0 ? [delay, true] : [delay, false])));
-            const activeSuffixes = ['major', 'minor', '7', 'maj7', 'dim', 'dim7', 'm7', 'sus4', 'aug'];
+            const activeSuffixes = [
+                'major',
+                'minor',
+                '7',
+                '9',
+                'm7',
+                'maj7',
+                'dim',
+                'dim7',
+                'sus4',
+                'sus2',
+                '7sus4',
+                'aug'
+            ];
             setCurrSuffixes(() =>
                 allSuffixes.map(suffix => (activeSuffixes.includes(suffix) ? [suffix, true] : [suffix, false]))
             );
